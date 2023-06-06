@@ -14,6 +14,7 @@ type FormData struct {
 	URL         string
 	Duration    int
 	Concurrency int
+	Rate        int
 }
 
 func main() {
@@ -38,6 +39,9 @@ func handleForm(w http.ResponseWriter, r *http.Request) {
 
 			<label for="concurrency">Concurrency:</label>
 			<input type="number" id="concurrency" name="concurrency" required value=1><br><br>
+
+			<label for="rate">Rate:</label>
+			<input type="number" id="rate" name="rate" required value=1><br><br>
 
 			<label for="hosts">Choose a host:</label>
 			<select name="host" id="host">
@@ -64,14 +68,17 @@ func handleSubmit(w http.ResponseWriter, r *http.Request) {
 		sDuration := r.FormValue("duration")
 		sConcurrency := r.FormValue("concurrency")
 		sHosts := r.FormValue("host")
+		sRate := r.FormValue("rate")
 
 		duration, _ := strconv.Atoi(sDuration)
 		concurrency, _ := strconv.Atoi(sConcurrency)
+		rate, _ := strconv.Atoi(sRate)
 
 		formData := FormData{
 			URL:         url,
 			Duration:    duration,
 			Concurrency: concurrency,
+			Rate:        rate,
 		}
 
 		marshalled, err := json.Marshal(formData)
